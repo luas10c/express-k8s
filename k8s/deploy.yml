@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: luas10c/api:latest
+        env:
+          - name: DATABASE_URL
+            value: posgresql://postgres:password@192.168.31.167:5432/postgres
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "256m"
+          limits:
+            memory: "256Mi"
+            cpu: "512m"
+        ports:
+        - containerPort: 7000
